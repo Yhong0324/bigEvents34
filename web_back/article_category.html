@@ -171,19 +171,20 @@
             $('#model_add').click(function () {
                 //判断这个按钮有没有btn-success类,如果有这个类,那就是保存
                 if ($(this).hasClass('btn-success')) {
-                    var eaitId = $('#recipient-id').val();
-                    var eaitName = $('#recipient-name').val();
-                    var eaitNickName = $('#recipient-nickname').val();
-                    // var data1 = $('form').serialize();//序列化
+                    //获取用户 修改之后的 类型名  和类型别名.
+                    // var eaitId = $('#recipient-id').val();
+                    // var eaitName = $('#recipient-name').val();
+                    // var eaitNickName = $('#recipient-nickname').val();
+                    var data1 = $('form').serialize();//序列化
                     $.ajax({
                         type: 'post',
                         url: 'http://localhost:8000/admin/category_edit',
-                        data: {
-                            id: eaitId,
-                            name: editName,
-                            slug: eaitNickName
-                        },
-                        // data:data1,
+                        // data: {
+                        //     id: eaitId,
+                        //     name: editName,
+                        //     slug: eaitNickName
+                        // },
+                        data:data1,
                         success: function (backData) {
                             console.log(backData);
                             if (backData.code == 200) {
@@ -204,6 +205,7 @@
                             slug: recipientNickname
                         },
                         success: function (backData) {
+                            console.log(backData);
                             if (backData.code == 200) {
                                 getData();
                             }
