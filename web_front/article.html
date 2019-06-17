@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/template-web.js"></script>
 </head>
 
 <body>
@@ -205,6 +207,32 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
+    <script id="tmp_artitle" type="text/html">
+        {{data.author}} 发布于 {{data.date}}&nbsp;&nbsp;&nbsp;分类: {{data.type}}&nbsp;&nbsp;&nbsp;阅读:
+        ({{data.read}})&nbsp;&nbsp;&nbsp;评论: ({{data.comment}})</div>
+    </script>
+
+    <script>
+        //获取通过url拼接的方式传递过来的id
+        var id = window.location.search.split('=')[1];
+        console.log(id);
+        $.ajax({
+            url: 'http://localhost:8000/admin/search',
+            data: {
+                id: id
+            },
+            success: function (backData) {
+                console.log(backData);
+                if (backData.code == 200) {
+                    $('.article_title').text(backData.data.title);//标题
+                    $('.article_con').html(backData.data.content);//内容
+                    // 渲染模版
+                    var resHtml = template('tmp_artitle', backData);
+                    $('.article_info').html(resHtml);
+                }
+            }
+        })
+    </script>
 </body>
 
 </html>
